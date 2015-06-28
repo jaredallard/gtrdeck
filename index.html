@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css" />
   <link rel="stylesheet" href="src/css/app.css" />
-  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <nav id="Nav">
@@ -24,14 +24,11 @@
   <article class="login" page="login">
     <div class="login-panel">
       <div class="inner">
-        <div class="image">
-          <img src="https://avatars1.githubusercontent.com/u/2391349?v=3&s=460" />
-        </div>
-        <h1 class="name">
-          Jared Allard
-        </h1>
+        <h1 style='display:none;' class='login-hello'>Welcome!</h1>
 
-        <button class="next btn fui-green" onclick="page.set('index')">Proceed</button>
+        <input style='display:none;' id='access_token' class='form-control' type="text" placeholder="personal access token"></input>
+
+        <button class="next btn fui-green" onclick="doLogin($('#access_token').val())">Proceed</button>
       </div>
     </div>
   </article>
@@ -107,6 +104,7 @@
     </div>
   </script>
 
+  <!-- Room template -->
   <script id="roomTemplate" type="text/x-handlebars-template">
     <div roomid="{{id}}" roomimg="{{img}}" roomname="{{name}}" class="room">
       <div class="room-image">
@@ -114,6 +112,16 @@
       </div>
       <div class="room-name">{{name}}</div>
     </div>
+  </script>
+
+  <!-- hello user template -->
+  <script id="helloTemplate" type="text/x-handlebars-template">
+    <div class="image">
+      <img src="{{img}}" />
+    </div>
+    <h1 class="name">
+      {{name}}
+    </h1>
   </script>
 
   <!-- be a cool kid -->

@@ -137,7 +137,8 @@ nav .credit {
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 
-  height:270px;
+  height:300px;
+
   max-width:350px;
   width:100%;
 
@@ -159,10 +160,25 @@ nav .credit {
   width:auto;
 }
 
+.login-hello {
+  margin-top:10px;
+  margin-bottom:30px;
+  font-size:2em;
+  font-weight: 400;
+  text-align: center;
+  font:'Lato', sans-serif;
+}
+
 .login-panel .inner .name {
   font-size:2.5em;
   color:#7f8c8d;
   text-align:center;
+}
+.login-panel input {
+  width:100%;
+  margin-top:20px;
+  box-shadow: none !important;
+  border-radius: none !important;
 }
 .login-panel .inner .next {
   position:absolute !important;

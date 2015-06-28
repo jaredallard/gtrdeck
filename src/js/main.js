@@ -251,6 +251,19 @@ if($("#messageTemplate")) {
   console.log("Found a message template.")
 }
 
+function doLogin(at) {
+  if(localStorage.getItem("access_token")!==undefined
+     && localStorage.getItem("access_token")!==''
+     && localStorage.getItem("access_token")!=='undefined') {
+       page.set('index');
+       return false // refuse to run if already set.
+  }
+
+  localStorage.setItem("access_token", at);
+  gtr.localSettings.values.access_token = localStorage.getItem("access_token");
+  page.set('index');
+}
+
 // load gitter
 gtr = new gitter();
 
@@ -260,4 +273,30 @@ function resize() {
 $(window).on('resize', resize);
 
 // initial page.
-page.set("login");
+if(localStorage.getItem("access_token")!==undefined
+   && localStorage.getItem("access_token")!==''
+   && localStorage.getItem("access_token")!=='undefined') {
+  var source = $("#helloTemplate").html();
+  template   = Handlebars.compile(source);
+
+  gtr.whoami(function(data) {
+    data = data[0]
+    console.log("[hello] name: ", data.displayName);
+    console.log("[whoami]: ", data)
+    var comp = template({
+      name: data.displayName,
+      img: data.avatarUrlMedium
+    })
+
+    // add it to the stack
+    $(".inner").prepend(comp);
+
+    $(".login-panel").height(270);
+
+    page.set("login");
+  })
+} else {
+  $(".login-panel").height(170);
+  $(".login-hello, #access_token").show();
+  page.set("login");
+}

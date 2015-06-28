@@ -14,7 +14,7 @@ function gitter() {
   this.apiurl = "https://api.gitter.im/";
 
   // user options
-  this.localSettings.values.access_token = '<snip>';
+  this.localSettings.values.access_token = localStorage.getItem("access_token");
   this.localSettings.values.loggedin = true;
 }
 
