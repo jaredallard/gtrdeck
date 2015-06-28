@@ -28,7 +28,8 @@ page.register({
         name = "TARDIX/Dev";
 
     // stream
-    initFaye(gtr.localSettings.values.access_token)
+    console.log(localStorage.getItem("access_token").replace(/\ /g, "").replace("	", ""))
+    initFaye(localStorage.getItem("access_token").replace(/\ /g, "").replace("	", ""))
 
     // Generate the Tab, messages, start stream.
     genTab({
@@ -206,31 +207,29 @@ function initFaye(token) {
   };
 
   // Faye client
-  var client = new Faye.Client('https://ws.gitter.im/faye', {timeout: 60, retry: 5, interval: 1});
+  window.faye_client = new Faye.Client('https://ws.gitter.im/faye', {timeout: 60, retry: 5, interval: 1});
 
   // Add Client Authentication extension
-  client.addExtension(new ClientAuthExt());
+  window.faye_client.addExtension(new ClientAuthExt());
 
   // A dummy handler to echo incoming messages
   window.messageHandler = function(msg, rid) {
-    console.log("[faye]: event from room: ", rid)
     if (msg.operation) {
       // new message.
       if(msg.operation === "create") {
         console.log("[message]: ", msg)
         generateMessage(msg.model, rid);
       }
-    }
-
-    if(msg.notification) {
+    } else if(msg.notification) {
       console.log("[notification]: ", msg);
+    } else {
+      console.log("[faye] unregistered type: ", msg);
     }
   };
-
-  window.faye_client = client;
 }
 
 function streamRoom(rid) {
+  console.log("[faye] register onto room: ", rid);
   function mh(msg) {
     var _rid = rid;
     messageHandler(msg, _rid)
@@ -240,6 +239,8 @@ function streamRoom(rid) {
   window.faye_client.subscribe('/api/v1/rooms/' + rid + '/chatMessages', mh, {});
   window.faye_client.subscribe('/api/v1/rooms/' + rid + '/users',        mh, {});
   window.faye_client.subscribe('/api/v1/rooms/' + rid + '/events',       mh, {});
+
+  console.log("[faye] subscribed.")
 }
 
 // check the templates.
