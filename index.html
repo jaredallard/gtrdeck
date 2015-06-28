@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css" />
+  <link rel="stylesheet" href="src/css/app.css" />
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <nav id="Nav">
+    <div class="logo">
+      gtrdeck
+    </div>
+
+    <div class="credit">
+      by @jaredallard
+    </div>
+  </nav>
+
+  <article class="login" page="login">
+    <div class="login-panel">
+      <div class="inner">
+        <div class="image">
+          <img src="https://avatars1.githubusercontent.com/u/2391349?v=3&s=460" />
+        </div>
+        <h1 class="name">
+          Jared Allard
+        </h1>
+
+        <button class="next btn fui-green" onclick="page.set('index')">Proceed</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="index" page="index">
+    <div class='side-nav'>
+      <div class="logo">
+        <i class="glyphicon glyphicon-comment" onclick='newMessage();'></i>
+      </div>
+
+      <div class="tabs">
+        <hr />
+        <div class='tabs-wrapper'>
+        </div>
+        <hr />
+        <div class='new-tab-wrapper'>
+          <i class='glyphicon glyphicon-plus' onclick='addTabs();'></i>
+        </div>
+      </div>
+
+      <div class="settings-wrapper">
+        <i class="glyphicon glyphicon-cog"></i>
+      </div>
+    </div>
+
+    <div class='dialog-bg'></div>
+
+    <div style='display:none;' class='tab-add-dialog'>
+      <div class='dialog-header'>
+        <div class='dialog-name'>Add a Tab</div>
+        <div class='dialog-close'>
+          <i class="glyphicon glyphicon-remove" onclick='closeTabDialog();'></i>
+        </div>
+      </div>
+      <div class='new-tabs'>
+      </div>
+    </div>
+
+    <div class="tab-wrapper"></div>
+  </article>
+
+  <!-- Tab Template -->
+  <script id="tabTemplate" type="text/x-handlebars-template">
+    <div id="{{rid}}-tab" class="tab">
+      <div class="header">
+        <div class="icon">
+          <img src="{{img}}"/>
+        </div>
+        <div class="name">{{name}}</div>
+        <i class="glyphicon glyphicon-remove"></i>
+      </div>
+      <div id='{{rid}}-content' style='display:none;' class="content-wrapper">
+      </div>
+    </div>
+  </script>
+
+  <!-- Message Template -->
+  <script id="messageTemplate" type="text/x-handlebars-template">
+    <div class="message">
+      <div class="image">
+        <img src="{{img}}" />
+      </div>
+      <div class="at-wrap">
+        <span class="message-name">{{{name}}}</span>
+        <span class="at">{{at}}</span>
+      </div>
+      <div class="contents">
+        {{{contents}}}
+      </div>
+
+      <!-- Timestamps -->
+      <div title="{{sentTime}}" class="sentTime">{{sentTimeParsed}}</div>
+    </div>
+  </script>
+
+  <script id="roomTemplate" type="text/x-handlebars-template">
+    <div roomid="{{id}}" roomimg="{{img}}" roomname="{{name}}" class="room">
+      <div class="room-image">
+        <img src="{{img}}" />
+      </div>
+      <div class="room-name">{{name}}</div>
+    </div>
+  </script>
+
+  <!-- be a cool kid -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/marked/marked.min.js"></script>
+  <script src="bower_components/faye/include.min.js"></script>
+  <script src="bower_components/highlightjs/highlight.pack.js"></script>
+  <script src="src/js/page.js"></script>
+  <script src="src/js/gitter.js"></script>
+  <script src="src/js/handlebars.min.js"></script>
+  <script src="src/js/timeago.js"></script>
+  <script src="src/js/main.js"></script>
+</body>
+</html>
