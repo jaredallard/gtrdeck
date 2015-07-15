@@ -255,6 +255,7 @@ if($("#messageTemplate")) {
 function doLogin(at) {
   if(localStorage.getItem("access_token")!==undefined
      && localStorage.getItem("access_token")!==''
+     && localStorage.getItem("access_token")!==null
      && localStorage.getItem("access_token")!=='undefined') {
        page.set('index');
        return false // refuse to run if already set.
@@ -276,7 +277,12 @@ $(window).on('resize', resize);
 // initial page.
 if(localStorage.getItem("access_token")!==undefined
    && localStorage.getItem("access_token")!==''
+   && localStorage.getItem("access_token")!==null
    && localStorage.getItem("access_token")!=='undefined') {
+
+  console.log("access_token found.")
+  console.log(localStorage.getItem("access_token"));
+
   var source = $("#helloTemplate").html();
   template   = Handlebars.compile(source);
 
@@ -297,6 +303,7 @@ if(localStorage.getItem("access_token")!==undefined
     page.set("login");
   })
 } else {
+  console.log("Should be logging in...")
   $(".login-panel").height(170);
   $(".login-hello, #access_token").show();
   page.set("login");
