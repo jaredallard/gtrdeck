@@ -2,6 +2,9 @@
  * gtrdeck js
  **/
 
+// load gitter
+var gtr = new Gitter();
+
 page.register({
   name: "login",
   onBack: false,
@@ -220,7 +223,7 @@ function streamRoom(rid) {
   console.log("[faye] register onto room: ", rid);
   function mh(msg) {
     var _rid = rid;
-    messageHandler(msg, _rid);
+    window.messageHandler(msg, _rid);
   }
 
   window.faye_client.subscribe('/api/v1/rooms/' + rid,                   mh, {});
@@ -251,9 +254,6 @@ function doLogin(at) {
   page.set('index');
 }
 
-// load gitter
-gtr = new Gitter();
-
 function resize() {
   $(".tab .content-wrapper").height($(".tab").height()-50);
 }
@@ -265,22 +265,22 @@ if(localStorage.getItem("access_token")!==undefined && localStorage.getItem("acc
   template   = Handlebars.compile(source);
 
   gtr.whoami(function(data) {
-    data = data[0]
+    data = data[0];
     console.log("[hello] name: ", data.displayName);
-    console.log("[whoami]: ", data)
+    console.log("[whoami]: ", data);
     var comp = template({
       name: data.displayName,
       img: data.avatarUrlMedium
-    })
+    });
 
     // add it to the stack
     $(".inner").prepend(comp);
     $(".login-panel").height(270);
 
     page.set("login");
-  })
+  });
 } else {
-  console.log("Should be logging in...")
+  console.log("Should be logging in...");
   $(".login-panel").height(170);
   $(".login-hello, #access_token").show();
   page.set("login");
