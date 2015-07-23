@@ -5,6 +5,7 @@
 // load gitter
 var gtr = new Gitter();
 
+// login page register.
 page.register({
   name: "login",
   onBack: false,
@@ -119,6 +120,7 @@ function genTab(obj) {
 function addTabs() {
   // fill room dialog with rooms.
   gtr.rooms(function(data, err) {
+    // precompile the room template; if needed.
     if(!window.room_template) {
       var source   = $("#roomTemplate").html();
       window.room_template = Handlebars.compile(source);
