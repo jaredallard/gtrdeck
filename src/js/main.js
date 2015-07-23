@@ -68,7 +68,7 @@ function generateMessage(v, rid) {
   text = text.replace(/\@([a-zA-Z]+)/g,
   "<a href='https://github.com/$1' target='__blank'>@$1</a>");
 
-  var name = v.fromUser.displayName.substr(0,17)
+  var name = v.fromUser.displayName.substr(0,17);
   if(name.length===17 && v.fromUser.displayName.length!==17) {
     name = name+" <b>...</b>";
   }
@@ -148,7 +148,7 @@ function addTabs() {
 
       // close the dialog.
       closeTabDialog();
-    })
+    });
   });
 
   $(".tab-add-dialog").show();
@@ -164,7 +164,7 @@ function initFaye(token) {
   // Authentication extension
   var ClientAuthExt = function() {};
   ClientAuthExt.prototype.outgoing = function(message, callback) {
-    if (message.channel == '/meta/handshake') {
+    if (message.channel === '/meta/handshake') {
       if (!message.ext) { message.ext = {}; }
       message.ext.token = token;
     }
@@ -173,7 +173,7 @@ function initFaye(token) {
   };
 
   ClientAuthExt.prototype.incoming = function(message, callback) {
-    if(message.channel == '/meta/handshake') {
+    if(message.channel === '/meta/handshake') {
       if(message.successful) {
         console.log('Successfuly subscribed to room: ', roomId);
       } else {
@@ -187,7 +187,7 @@ function initFaye(token) {
   // Snapshot extension
   var SnapshotExt = function() {};
   ClientAuthExt.prototype.incoming = function(message, callback) {
-    if(message.channel == '/meta/subscribe' && message.ext && message.ext.snapshot) {
+    if(message.channel === '/meta/subscribe' && message.ext && message.ext.snapshot) {
       console.log('Snapshot: ', message.ext.snapshot);
     }
 
@@ -205,7 +205,7 @@ function initFaye(token) {
     if (msg.operation) {
       // new message.
       if(msg.operation === "create") {
-        console.log("[message]: ", msg)
+        console.log("[message]: ", msg);
         generateMessage(msg.model, rid);
       }
     } else if(msg.notification) {
@@ -252,7 +252,7 @@ function doLogin(at) {
 }
 
 // load gitter
-gtr = new gitter();
+gtr = new Gitter();
 
 function resize() {
   $(".tab .content-wrapper").height($(".tab").height()-50);

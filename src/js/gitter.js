@@ -5,9 +5,9 @@
  * @version 0.1.1
  * @license MIT
  *
- * @class gitter
+ * @class Gitter
  */
-function gitter() {
+function Gitter() {
   // Specific data for the object on construct
   this.localSettings = {}
   this.localSettings.values = {}
@@ -24,9 +24,9 @@ function gitter() {
  * @param {string} method - HTTP Method i.e POST, GET
  * @param {string} endpoint - https://api.gitter.im/.../... API endpoint!
  * @param {object} options - options for request
- * @memberOf gitter
+ * @memberOf Gitter
  */
-gitter.prototype.request = function (method, endpoint, options) {
+Gitter.prototype.request = function (method, endpoint, options) {
   /* Setup headers */
   var _headers = {
       'Authorization': 'Bearer ' + this.localSettings.values.access_token,
@@ -87,9 +87,9 @@ gitter.prototype.request = function (method, endpoint, options) {
  *
  * @params {string} endpoint - endpoint of API
  * @params {object} params - options
- * @memberOf gitter
+ * @memberOf Gitter
  */
-gitter.prototype.get = function (endpoint, params) {
+Gitter.prototype.get = function (endpoint, params) {
   this.request("GET", endpoint, params);
 };
 
@@ -98,18 +98,18 @@ gitter.prototype.get = function (endpoint, params) {
  *
  * @params {string} endpoint - endpoint of API
  * @params {object} params - options
- * @memberOf gitter
+ * @memberOf Gitter
  */
-gitter.prototype.post = function (endpoint, params) {
+Gitter.prototype.post = function (endpoint, params) {
   this.request("POST", endpoint, params);
 };
 
 /*
  * Finalizes oAuth action after we were called.
- * @memberOf gitter
+ * @memberOf Gitter
  * @return {bool} success
  */
-gitter.prototype.init = function (cb) {
+Gitter.prototype.init = function (cb) {
   function getUrlParams(url) {
     // http://stackoverflow.com/a/23946023/2407309
     if (typeof url === 'undefined') {
@@ -165,9 +165,9 @@ gitter.prototype.init = function (cb) {
 
 /*
  * Internal callback to save the tokens.
- * @memberOf gitter
+ * @memberOf Gitter
  */
-gitter.prototype.addTokens = function (resp) {
+Gitter.prototype.addTokens = function (resp) {
   // save state
   this.localSettings.values.access_token = resp.access_token;
   this.localSettings.values.loggedin = true;
@@ -178,19 +178,19 @@ gitter.prototype.addTokens = function (resp) {
 
 /**
  * Logs the currently loggedin user out
- * @memberOf gitter
+ * @memberOf Gitter
  */
-gitter.prototype.logout = function () {
+Gitter.prototype.logout = function () {
   this.localSettings.values.loggedin = false; // one line
 };
 
 /*
  * Get users subscribed rooms
  *
- * @memberOf gitter
+ * @memberOf Gitter
  * @callback cb - Callback
  */
-gitter.prototype.rooms = function (cb) {
+Gitter.prototype.rooms = function (cb) {
   this.request("GET", "v1/rooms", {
     success: function (data) {
       cb(data);
@@ -210,9 +210,9 @@ gitter.prototype.rooms = function (cb) {
  * @param {function} cb - callback to excute on error/success
  * @param {string} beforeId - before id of messages. optional
  *
- * @memberOf gitter
+ * @memberOf Gitter
  */
-gitter.prototype.messages = function (roomId, limit, cb, beforeId) {
+Gitter.prototype.messages = function (roomId, limit, cb, beforeId) {
   // Setup _params
   var _params = {};
   _params.limit = limit;
@@ -237,10 +237,10 @@ gitter.prototype.messages = function (roomId, limit, cb, beforeId) {
 /**
  * Get an object of the current user who is logged in.
  *
- * @memberOf gitter
+ * @memberOf Gitter
  * @param {function} cb - callback function on error/success
  */
-gitter.prototype.whoami = function (cb) {
+Gitter.prototype.whoami = function (cb) {
   this.request("GET", "v1/user", {
     success: function (data) {
       cb(data);
@@ -254,12 +254,12 @@ gitter.prototype.whoami = function (cb) {
 /**
  * Post a message to a room from currently logged in user
  *
- * @memberOf gitter
+ * @memberOf Gitter
  * @param {string} rid - id of room
  * @param {string} text - text to post
  * @param {function} cb - callback on error/success
  */
-gitter.prototype.sendMessage = function (rid, text, cb) {
+Gitter.prototype.sendMessage = function (rid, text, cb) {
   return this.post('v1/rooms/' + rid + '/chatMessages', {
     success: function (data) {
       cb(data);
