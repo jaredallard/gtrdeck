@@ -13,7 +13,7 @@ page.register({
   },
   nav: true,
   back: false
-})
+});
 
 // index "tab" page.
 page.register({
@@ -33,7 +33,7 @@ page.register({
   },
   nav: false,
   back: false
-})
+});
 
 function getRoomMessages(rid) {
   gtr.messages(rid, 50, function (data, err) {
@@ -62,7 +62,7 @@ function generateMessage(v, rid) {
     window.message_template = Handlebars.compile(source);
   }
 
-  var text = marked(v.text)
+  var text = marked(v.text);
 
   // usernames
   text = text.replace(/\@([a-zA-Z]+)/g,
@@ -70,7 +70,7 @@ function generateMessage(v, rid) {
 
   var name = v.fromUser.displayName.substr(0,17)
   if(name.length===17 && v.fromUser.displayName.length!==17) {
-    name = name+" <b>...</b>"
+    name = name+" <b>...</b>";
   }
 
   // handlebars template.
@@ -98,13 +98,13 @@ function genTab(obj) {
   if(document.getElementById(obj.rid+"-tab")) {
     console.log("[tab] obj: ", document.getElementById(obj.rid+"-tab"));
     console.log("[tab] ignorning request to make new tab, already exists.");
-    return false
+    return false;
   }
 
   var str = "<div class='tabs'><img src='"+obj.img+"' /></div>";
   var comp = window.tab_template(obj);
 
-  console.log("[tab]: new tab", obj)
+  console.log("[tab]: new tab", obj);
 
   $(".tab-wrapper").append(comp);
   $(".tabs-wrapper").append(str);
