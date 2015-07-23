@@ -1,5 +1,7 @@
 # gtrdeck
 
+[![Code Climate](https://codeclimate.com/github/jaredallard/gtrdeck/badges/gpa.svg)](https://codeclimate.com/github/jaredallard/gtrdeck)
+
 A Gitter client!
 
 ## Why?

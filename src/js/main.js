@@ -23,21 +23,6 @@ page.register({
     $("html,body").attr("style", "background-image:none !important;background-color: #444448 !important;");
     $("article[page=index]").show();
 
-    var rid  = '5531927915522ed4b3df2d92',
-        img  = 'https://avatars.githubusercontent.com/TARDIX',
-        name = "TARDIX/Dev";
-
-    // stream
-    console.log(localStorage.getItem("access_token").replace(/\ /g, "").replace("	", ""))
-    initFaye(localStorage.getItem("access_token").replace(/\ /g, "").replace("	", ""))
-
-    // Generate the Tab, messages, start stream.
-    genTab({
-      rid: rid,
-      name: name,
-      img: img
-    })
-
     // time stream
     setInterval(function() {
       $(".sentTime").timeago();
@@ -111,7 +96,7 @@ function genTab(obj) {
 
   // check if tab already exists.
   if(document.getElementById(obj.rid+"-tab")) {
-    console.log("[tab] obj: ", document.getElementById(obj.rid+"-tab"))
+    console.log("[tab] obj: ", document.getElementById(obj.rid+"-tab"));
     console.log("[tab] ignorning request to make new tab, already exists.");
     return false
   }
@@ -135,6 +120,9 @@ function addTabs() {
       var source   = $("#roomTemplate").html();
       window.room_template = Handlebars.compile(source);
     }
+
+    // clean up the old div
+    $(".new-tabs").html("");
 
     data.forEach(function(v) {
       var comp = window.room_template({
@@ -232,7 +220,7 @@ function streamRoom(rid) {
   console.log("[faye] register onto room: ", rid);
   function mh(msg) {
     var _rid = rid;
-    messageHandler(msg, _rid)
+    messageHandler(msg, _rid);
   }
 
   window.faye_client.subscribe('/api/v1/rooms/' + rid,                   mh, {});
@@ -240,7 +228,7 @@ function streamRoom(rid) {
   window.faye_client.subscribe('/api/v1/rooms/' + rid + '/users',        mh, {});
   window.faye_client.subscribe('/api/v1/rooms/' + rid + '/events',       mh, {});
 
-  console.log("[faye] subscribed.")
+  console.log("[faye] subscribed.");
 }
 
 // check the templates.
@@ -249,16 +237,13 @@ if($("#tabTemplate")) {
 }
 
 if($("#messageTemplate")) {
-  console.log("Found a message template.")
+  console.log("Found a message template.");
 }
 
 function doLogin(at) {
-  if(localStorage.getItem("access_token")!==undefined
-     && localStorage.getItem("access_token")!==''
-     && localStorage.getItem("access_token")!==null
-     && localStorage.getItem("access_token")!=='undefined') {
+  if(localStorage.getItem("access_token")!==undefined && localStorage.getItem("access_token")!==null) {
        page.set('index');
-       return false // refuse to run if already set.
+       return false; // refuse to run if already set.
   }
 
   localStorage.setItem("access_token", at);
@@ -275,14 +260,7 @@ function resize() {
 $(window).on('resize', resize);
 
 // initial page.
-if(localStorage.getItem("access_token")!==undefined
-   && localStorage.getItem("access_token")!==''
-   && localStorage.getItem("access_token")!==null
-   && localStorage.getItem("access_token")!=='undefined') {
-
-  console.log("access_token found.")
-  console.log(localStorage.getItem("access_token"));
-
+if(localStorage.getItem("access_token")!==undefined && localStorage.getItem("access_token")!==null) {
   var source = $("#helloTemplate").html();
   template   = Handlebars.compile(source);
 
@@ -297,7 +275,6 @@ if(localStorage.getItem("access_token")!==undefined
 
     // add it to the stack
     $(".inner").prepend(comp);
-
     $(".login-panel").height(270);
 
     page.set("login");
