@@ -162,6 +162,9 @@ function genTab(obj) {
 }
 
 function addTabs() {
+  $(".new-tabs").html("");
+  $(".new-tabs").spin("large", "#444448");
+
   // fill room dialog with rooms.
   gtr.rooms(function(data, err) {
     // precompile the room template; if needed.
@@ -170,8 +173,7 @@ function addTabs() {
       window.room_template = Handlebars.compile(source);
     }
 
-    // clean up the old div
-    $(".new-tabs").html("");
+    $(".new-tabs").spin(false); // stop the spinner
 
     data.forEach(function(v) {
       var comp = window.room_template({

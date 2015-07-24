@@ -1,16 +1,17 @@
 /**
  * Javascript API Wrapper for gitter.im.
  *
- * @author RainbowDashDC <rainbowdashdc@mezgrman.de> (Jared Allard)
+ * @author Jared Allard <jaredallard@outollo.com>
  * @version 0.1.1
  * @license MIT
+ * @note This was originally designed for Windows Phone 
  *
  * @class Gitter
  */
 function Gitter() {
   // Specific data for the object on construct
-  this.localSettings = {}
-  this.localSettings.values = {}
+  this.localSettings = {};
+  this.localSettings.values = {};
   this.apiurl = "https://api.gitter.im/";
 
   // user options
@@ -76,7 +77,7 @@ Gitter.prototype.request = function (method, endpoint, options) {
   result
     .then(function(data) {
         options.success(data);
-    })
+    });
     /*.catch(function(err) {
         options.error(err);
     });*/
