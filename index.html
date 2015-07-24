@@ -21,6 +21,10 @@
     </div>
   </nav>
 
+  <article class="load" page="load">
+    <div class='load-wrapper'></div>
+  </article>
+
   <article class="login" page="login">
     <div class="login-panel">
       <div class="inner">
@@ -78,7 +82,7 @@
           <img src="{{img}}"/>
         </div>
         <div class="name">{{name}}</div>
-        <i class="glyphicon glyphicon-remove"></i>
+        <i class="glyphicon glyphicon-remove" onclick='removeRoom("{{rid}}")'></i>
       </div>
       <div id='{{rid}}-content' style='display:none;' class="content-wrapper">
       </div>
@@ -131,6 +135,8 @@
   <script src="bower_components/highlightjs/highlight.pack.js"></script>
   <script src="bower_components/handlebars/handlebars.min.js"></script>
   <script src="bower_components/timeago/jquery.timeago.js"></script>
+  <script src="bower_components/spinjs/spin.min.js"></script>
+  <script src="bower_components/spinjs/jquery.spin.js"></script>
   <script src="src/js/page.js"></script>
   <script src="src/js/gitter.js"></script>
   <script src="src/js/main.js"></script>

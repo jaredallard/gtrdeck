@@ -10,6 +10,8 @@ page.register({
   name: "login",
   onBack: false,
   init: function() {
+    $(".login-panel").height(170);
+    $(".login-hello, #access_token").show();
     $("article[page=login]").show();
   },
   exit: function() {
@@ -38,6 +40,48 @@ page.register({
   nav: false,
   back: false
 });
+
+// page is loading page
+page.register({
+  name: 'load',
+  onBack: false,
+  init: function() {
+    var opts = {
+       lines: 13, // The number of lines to draw
+       length: 28, // The length of each line
+       width: 14, // The line thickness
+       radius: 42, // The radius of the inner circle
+       scale: 1, // Scales overall size of the spinner
+       corners: 1, // Corner roundness (0..1)
+       color: '#FFFFFF', // #rgb or #rrggbb or array of colors
+       opacity: 0, // Opacity of the lines
+       rotate: 0, // The rotation offset
+       direction: 1, // 1: clockwise, -1: counterclockwise
+       speed: 1, // Rounds per second
+       trail: 30, // Afterglow percentage
+       fps: 20, // Frames per second when using setTimeout() as a fallback for CSS
+       zIndex: 2e9, // The z-index (defaults to 2000000000)
+       className: 'spinner', // The CSS class to assign to the spinner
+       top: '50%', // Top position relative to parent
+       left: '50%', // Left position relative to parent
+       shadow: false, // Whether to render a shadow
+       hwaccel: true, // Whether to use hardware acceleration
+       position: 'absolute' // Element positioning
+    };
+
+    $(".load-wrapper").spin(opts);
+
+    $("article[page=load]").show();
+  },
+  exit: function() {
+    $("article[page=load]").hide();
+  },
+  nav: true,
+  back: false
+});
+
+// inital loading page
+page.set("load");
 
 function getRoomMessages(rid) {
   gtr.messages(rid, 50, function (data, err) {
@@ -236,15 +280,6 @@ function streamRoom(rid) {
   console.log("[faye] subscribed.");
 }
 
-// check the templates.
-if($("#tabTemplate")) {
-  console.log("Found a tab template.");
-}
-
-if($("#messageTemplate")) {
-  console.log("Found a message template.");
-}
-
 function doLogin(at) {
   if(localStorage.getItem("access_token")!==undefined && localStorage.getItem("access_token")!==null) {
        page.set('index');
@@ -261,29 +296,12 @@ function resize() {
 }
 $(window).on('resize', resize);
 
-// initial page.
+// initial page or to index.
 if(localStorage.getItem("access_token")!==undefined && localStorage.getItem("access_token")!==null) {
-  var source = $("#helloTemplate").html();
-  template   = Handlebars.compile(source);
-
   gtr.whoami(function(data) {
-    data = data[0];
-    console.log("[hello] name: ", data.displayName);
-    console.log("[whoami]: ", data);
-    var comp = template({
-      name: data.displayName,
-      img: data.avatarUrlMedium
-    });
-
-    // add it to the stack
-    $(".inner").prepend(comp);
-    $(".login-panel").height(270);
-
-    page.set("login");
+    window.user_object = data[0]; // user data object.
+    page.set("index");
   });
 } else {
-  console.log("Should be logging in...");
-  $(".login-panel").height(170);
-  $(".login-hello, #access_token").show();
   page.set("login");
 }
