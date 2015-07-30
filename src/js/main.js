@@ -29,6 +29,10 @@ page.register({
     $("html,body").attr("style", "background-image:none !important;background-color: #444448 !important;");
     $("article[page=index]").show();
 
+    console.log(localStorage.getItem("access_token")); // verify we have a true at
+
+    initFaye(localStorage.getItem("access_token"));
+
     // time stream
     setInterval(function() {
       $(".sentTime").timeago();
@@ -268,7 +272,7 @@ function initFaye(token) {
 }
 
 function streamRoom(rid) {
-  console.log("[faye] register onto room: ", rid);
+  console.log("[faye] register onto room: "+rid);
   function mh(msg) {
     var _rid = rid;
     window.messageHandler(msg, _rid);
