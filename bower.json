@@ -1,0 +1,31 @@
+{
+  "name": "gtrdeck",
+  "version": "0.0.1",
+  "description": "A Tweetdeck-like Gitter web client",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "authors": [
+    "Jared Allard"
+  ],
+  "license": "MIT",
+  "homepage": "http://jaredallard.me/gtrdeck",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "marked": "~0.3.3",
+    "highlightjs": "~8.5.0",
+    "faye": "~1.1.0",
+    "handlebars": "~3.0.3",
+    "timeago": "~1.4.1",
+    "spinjs": "~2.3.1"
+  }
+}
