@@ -58,6 +58,31 @@
       </div>
     </div>
 
+    <div class='message-wrapper'>
+      <div class='message-header'>
+          <h1>New Message</h1>
+          <hr />
+      </div>
+
+      <div class='message-room'>
+        <img class='message-room-img' style='display:none;' src='' />
+        <p class='message-room-name'>Please click a rooms header.</p>
+      </div>
+
+      <div class='message-accounts-wrapper'>
+
+      </div>
+
+      <div class='message-text-wrapper'>
+        <div class='message-textarea' contenteditable="true"></div>
+      </div>
+
+      <div class='message-btn-wrapper'>
+        <button id='message-btn' class='btn btn-success' disabled onclick='sendMessage()'>Send</button>
+        <div class='message-text-counter'>0</div>
+      </div>
+    </div>
+
     <div class='dialog-bg'></div>
 
     <div style='display:none;' class='tab-add-dialog'>
@@ -77,7 +102,7 @@
   <!-- Tab Template -->
   <script id="tabTemplate" type="text/x-handlebars-template">
     <div id="{{rid}}-tab" class="tab">
-      <div class="header">
+      <div data-rid="{{rid}}" class="header">
         <div class="icon">
           <img src="{{img}}"/>
         </div>
@@ -96,7 +121,7 @@
         <img src="{{img}}" />
       </div>
       <div class="at-wrap">
-        <span class="message-name">{{{name}}}</span>
+        <span class="message-name">{{{at}}}</span>
         <span class="at">{{at}}</span>
       </div>
       <div class="contents">

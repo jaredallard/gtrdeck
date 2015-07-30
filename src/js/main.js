@@ -2,6 +2,8 @@
  * gtrdeck js
  **/
 
+ "use strict";
+
 // load gitter
 var gtr = new Gitter();
 
@@ -32,6 +34,15 @@ page.register({
     console.log(localStorage.getItem("access_token")); // verify we have a true at
 
     initFaye(localStorage.getItem("access_token"));
+
+    newMessageHighlights();
+
+    $('.message-textarea').keydown(function (e) {
+
+      if (e.ctrlKey && e.keyCode == 13) {
+        sendMessage();
+      }
+    });
 
     // time stream
     setInterval(function() {
@@ -161,6 +172,10 @@ function genTab(obj) {
   $(".tab-wrapper").append(comp);
   $(".tabs-wrapper").append(str);
 
+  $('#'+obj.rid+'-tab .header').click(function() {
+    setMessageScope($(this).attr('data-rid'));
+  });
+
   // get messages.
   getRoomMessages(obj.rid);
 }
@@ -179,7 +194,10 @@ function addTabs() {
 
     $(".new-tabs").spin(false); // stop the spinner
 
+    window.rooms = {};
+
     data.forEach(function(v) {
+      window.rooms[v.id] = v; // add for other stuff.
       var comp = window.room_template({
         id: v.id,
         name: v.name,
@@ -286,6 +304,40 @@ function streamRoom(rid) {
   console.log("[faye] subscribed.");
 }
 
+function newMessage() {
+  $('.message-wrapper').toggle();
+}
+
+function newMessageHighlights() {
+  $('.message-textarea').on('keyup', function() {
+    var contents = $(this).text();
+    var at = contents.match(/\@([a-zA-Z0-9]+)/g);
+
+    console.log(at);
+  });
+
+  setInterval(function(){
+    $('.message-text-counter').text($('.message-textarea').text().length);
+  }, 10);
+}
+
+function setMessageScope(rid) {
+  window.message_scope = rid; // temp?
+
+
+  if(window.rooms[rid] !== undefined) {
+    console.log(window.rooms[rid].name);
+    $(".message-room-img").attr('src', "https://avatars.githubusercontent.com" + "/" + window.rooms[rid].name.split("/")[0])
+    $(".message-room-name").text(window.rooms[rid].name);
+    $(".message-room-img").show();
+  } else {
+    console.log("Error: No name for room registered, will display reply as ID.")
+    $(".message-room-name").text(rid);
+  }
+
+   $('#message-btn').attr("disabled", false);
+}
+
 function doLogin(at) {
   if(localStorage.getItem("access_token")!==undefined && localStorage.getItem("access_token")!==null) {
        page.set('index');
@@ -295,6 +347,26 @@ function doLogin(at) {
   localStorage.setItem("access_token", at);
   gtr.localSettings.values.access_token = localStorage.getItem("access_token");
   page.set('index');
+}
+
+function sendMessage() {
+  if(window.message_scope === undefined) {
+    return false;
+  }
+
+  var message = $(".message-textarea").text();
+  $('.message-textarea').attr("disabled", true);
+
+  // send the message
+  gtr.sendMessage(window.message_scope, message, function(data) {
+    if(data.html === undefined) {
+      console.log("Failed to send message");
+    } else {
+      $('.message-textarea').html("");
+    }
+
+    $('.message-textarea').attr("disabled", false);
+  });
 }
 
 function resize() {

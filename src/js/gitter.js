@@ -4,7 +4,7 @@
  * @author Jared Allard <jaredallard@outollo.com>
  * @version 0.1.1
  * @license MIT
- * @note This was originally designed for Windows Phone 
+ * @note This was originally designed for Windows Phone
  *
  * @class Gitter
  */
@@ -78,9 +78,6 @@ Gitter.prototype.request = function (method, endpoint, options) {
     .then(function(data) {
         options.success(data);
     });
-    /*.catch(function(err) {
-        options.error(err);
-    });*/
 };
 
 /*
