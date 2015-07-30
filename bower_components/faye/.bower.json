@@ -1,0 +1,25 @@
+{
+  "name": "faye",
+  "version": "1.1.0",
+  "authors": [
+    "☮ elf Pavlik ☮ <perpetual-tripper@wwelves.org>"
+  ],
+  "description": "Simple pub/sub messaging for the web",
+  "main": "include.js",
+  "keywords": [
+    "pubsub",
+    "realtime",
+    "bayeux"
+  ],
+  "license": "MIT",
+  "homepage": "http://faye.jcoglan.com/",
+  "_release": "1.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.0",
+    "commit": "75ff5985b2a3e5ff880e40af5a97548f6226d2d6"
+  },
+  "_source": "git://github.com/hackers4peace/faye-browser.git",
+  "_target": "~1.1.0",
+  "_originalSource": "faye"
+}
